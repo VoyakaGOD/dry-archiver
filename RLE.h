@@ -1,17 +1,14 @@
 #ifndef RLE_HEADER
 #define RLE_HEADER
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "byte_buffer.h"
 
-typedef unsigned char byte_t;
+int RLE_encode(byte_buffer_t *src, byte_buffer_t *dst);
 
-int RLE_encode(FILE *src, FILE *dst, long max_block_size);
+int RLE_decode(byte_buffer_t *src, byte_buffer_t *dst);
 
-int RLE_decode(FILE *src, FILE *dst, long max_block_size);
+int RLE_pack_bits(byte_buffer_t *src, byte_buffer_t *dst);
 
-int RLE_pack_bits(FILE *src, FILE *dst, long max_block_size);
-
-int RLE_unpack_bits(FILE *src, FILE *dst, long max_block_size);
+int RLE_unpack_bits(byte_buffer_t *src, byte_buffer_t *dst);
 
 #endif //RLE_HEADER

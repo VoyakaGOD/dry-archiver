@@ -2,6 +2,9 @@
 
 int byte_buffer_init(byte_buffer_t *buffer, const char *filename, long max_buffer_size, const char *mode)
 {
+    if(max_buffer_size < 1)
+        max_buffer_size = 1;
+    
     buffer->file = fopen(filename, mode);
     if(!buffer->file)
         return 1;
@@ -11,9 +14,10 @@ int byte_buffer_init(byte_buffer_t *buffer, const char *filename, long max_buffe
     buffer->index = 0;
     buffer->size = 0;
     buffer->max_size = max_buffer_size;
+    return 0;
 }
 
-int byte_buffer_release(byte_buffer_t *buffer)
+void byte_buffer_release(byte_buffer_t *buffer)
 {
     fclose(buffer->file);
     free(buffer->content);
@@ -55,6 +59,10 @@ void byte_buffer_write_bytes(byte_buffer_t *buffer, byte_t *bytes, long count)
 byte_t byte_buffer_read(byte_buffer_t *buffer)
 {
     if(buffer->index == buffer->size)
+    {
         byte_buffer_load(buffer);
+        if(buffer->size == 0)
+            return 0;
+    }
     return buffer->content[buffer->index++];
 }
