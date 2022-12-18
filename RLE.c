@@ -135,6 +135,13 @@ int RLE_unpack_bits(FILE *src, FILE *dst, long max_block_size)
 
         for(long i = 0; i < block_size;)
         {
+            if(i == block_size)
+            {
+                if(block_size < max_block_size)
+                    break;
+                block_size = fread(src_buffer, sizeof(byte_t), max_block_size, src);
+                i = 0;
+            }
             byte_t count = src_buffer[i++];
             byte_t skip = count & 0x80;
             if(skip)
