@@ -6,8 +6,8 @@
 
 typedef unsigned char byte_t;
 
-void RLE_encode(FILE *src, FILE *dst, long max_block_size);
+int RLE_encode(FILE *src, FILE *dst, long max_block_size);
 
-void RLE_decode(FILE *src, FILE *dst, long max_block_size);
+int RLE_decode(FILE *src, FILE *dst, long max_block_size);
 
 #endif //RLE_HEADER

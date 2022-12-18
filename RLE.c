@@ -15,9 +15,10 @@ static int check_files(FILE *src, FILE *dst)
     return 0;
 }
 
-void RLE_encode(FILE *src, FILE *dst, long max_block_size)
+int RLE_encode(FILE *src, FILE *dst, long max_block_size)
 {
-    check_files(src, dst);
+    if(check_files(src, dst))
+        return 1;
 
     byte_t *src_buffer = (byte_t *)calloc(max_block_size, sizeof(byte_t));
     byte_t *dst_buffer = (byte_t *)calloc(2 * max_block_size, sizeof(byte_t));
@@ -28,7 +29,7 @@ void RLE_encode(FILE *src, FILE *dst, long max_block_size)
         long dst_index = 0;
         long block_size = fread(src_buffer, sizeof(byte_t), max_block_size, src);
         if(block_size == 0)
-            return;
+            return 0;
         byte_t current = src_buffer[0];
         byte_t count = 1;
 
@@ -44,9 +45,20 @@ void RLE_encode(FILE *src, FILE *dst, long max_block_size)
             current = src_buffer[i];
             count = 1;
         }
+        if(count > 0)
+        {
+            dst_buffer[dst_index++] = count;
+            dst_buffer[dst_index++] = current;
+        }
 
         fwrite(dst_buffer, sizeof(byte_t), dst_index, dst);
         if(block_size < max_block_size)
             break;
     }
+    return 0;
+}
+
+int RLE_decode(FILE *src, FILE *dst, long max_block_size)
+{
+    return -100;
 }
