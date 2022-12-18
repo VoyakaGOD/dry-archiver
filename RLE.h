@@ -10,4 +10,8 @@ int RLE_encode(FILE *src, FILE *dst, long max_block_size);
 
 int RLE_decode(FILE *src, FILE *dst, long max_block_size);
 
+int RLE_pack_bits(FILE *src, FILE *dst, long max_block_size);
+
+int RLE_unpack_bits(FILE *src, FILE *dst, long max_block_size);
+
 #endif //RLE_HEADER

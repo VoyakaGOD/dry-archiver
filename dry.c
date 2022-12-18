@@ -5,7 +5,7 @@ int main(int argc, char **argv)
 {
     if(argc != 4)
     {
-        printf("dry [-c|-d] {in} {out}\n");
+        printf("dry [-c|-d|-p|-u] {in} {out}\n");
         return 0;
     }
 
@@ -21,6 +21,14 @@ int main(int argc, char **argv)
     {
         error = RLE_decode(input, output, 1024);
     }
+    else if(!strcmp(argv[1], "-p"))
+    {
+        error = RLE_pack_bits(input, output, 1024);
+    }
+    else if(!strcmp(argv[1], "-u"))
+    {
+        error = RLE_unpack_bits(input, output, 1024);
+    }
     else
     {
         printf("Unexpected mode!");
@@ -30,6 +38,6 @@ int main(int argc, char **argv)
     fclose(input);
     fclose(output);
     if(error)
-        remove(output);
+        remove(argv[3]);
     return error;
 }
