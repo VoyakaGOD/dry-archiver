@@ -25,19 +25,19 @@ int main(int argc, char **argv)
 
     if(!strcmp(argv[1], "-c"))
     {
-        error = RLE_encode(input, output);
+        error = RLE_encode(&input, &output);
     }
     else if(!strcmp(argv[1], "-d"))
     {
-        error = RLE_decode(input, output);
+        error = RLE_decode(&input, &output);
     }
     else if(!strcmp(argv[1], "-p"))
     {
-        error = RLE_pack_bits(input, output);
+        error = RLE_pack_bits(&input, &output);
     }
     else if(!strcmp(argv[1], "-u"))
     {
-        error = RLE_unpack_bits(input, output);
+        error = RLE_unpack_bits(&input, &output);
     }
     else
     {
@@ -45,8 +45,8 @@ int main(int argc, char **argv)
         error = 1;
     }
 
-    byte_buffer_release(input);
-    byte_buffer_release(output);
+    byte_buffer_release(&input);
+    byte_buffer_release(&output);
     if(error)
         remove(argv[3]);
     return error;

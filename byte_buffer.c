@@ -51,7 +51,7 @@ void byte_buffer_write_bytes(byte_buffer_t *buffer, byte_t *bytes, long count)
     }
     else
     {
-        while(buffer->index < buffer->max_size)
+        while((count--) > 0)
             buffer->content[buffer->index++] = *(bytes++);
     }
 }
