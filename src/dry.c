@@ -133,6 +133,13 @@ int main(int argc, char **argv)
     byte_buffer_release(&input);
     byte_buffer_release(&output);
     if(error)
+    {
         remove(out_file_name);
+        printf("Fail!");
+    }
+    else
+    {
+        printf("Success!");
+    }
     return error;
 }
